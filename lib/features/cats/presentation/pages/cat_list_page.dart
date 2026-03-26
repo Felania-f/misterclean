@@ -16,11 +16,15 @@ class CatListPage extends ConsumerStatefulWidget {
   ConsumerState<CatListPage> createState() => _CatListPageState();
 }
 
+//!1.1.1 S — Single Responsibility Principle (SRP) / Curly's Law
 class _CatListPageState extends ConsumerState<CatListPage> {
   final TextEditingController _editingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
   bool _showSearch = true;
+
+//!1.2.8 Law of Demeter
+//!1.2.3 Separation of Concerns
 
   Future<String> _fetchCatImage(String id) async {
     final response = await http.get(
@@ -53,6 +57,7 @@ class _CatListPageState extends ConsumerState<CatListPage> {
     }
   }
 
+//!2.1.1 Bloaters listes de paramètres excessives, ici 8 paramètres
   Widget _buildCustomItem(Cat cat, bool isFirst, bool isLast, Color bg,
       double h, String label, bool showIcon, int maxLines) {
     return Container(

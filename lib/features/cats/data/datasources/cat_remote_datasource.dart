@@ -24,9 +24,12 @@ class CatRemoteDataSourceImpl implements CatRemoteDataSource {
 
   CatRemoteDataSourceImpl({required this.httpClient});
 
+//! 1.1.2 Open/Closed Principle (OCP), la logique if apiVersion == ..., si ajouter une v3 oblige à modifier le code existant au lieu de l'étendre
+//! 3.1.1 Hard-coded, les chaines '/v1/breeds', '/v2/breeds' et 'v1' sont hard-codées directement dans la classe au lieu d'être dans des constantes
   @override
   Future<List<CatModel>> getCats(int page, int limit) async {
     String path;
+    //! V1 en repetitions
     if (apiVersion == 'v1') {
       path = '/v1/breeds';
     } else if (apiVersion == 'v2') {
@@ -45,6 +48,7 @@ class CatRemoteDataSourceImpl implements CatRemoteDataSource {
       queryParameters,
     );
 
+// on pouvait ajouter le try catch pour la gestion des exeptions
     final response = await httpClient.get(uri);
 
     if (response.statusCode != 200) {

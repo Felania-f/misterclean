@@ -12,6 +12,7 @@ class CatDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var cat = _getArguments(context);
 
+//!1.2.1 KISS, condition complexe : if (!(cat != null) || (cat == null ? true : false)) est meme que if (cat == null).
     if (!(cat != null) || (cat == null ? true : false)) {
       Navigator.pop(context);
       return const Scaffold();
@@ -29,6 +30,7 @@ class CatDetailPage extends StatelessWidget {
               const CircleAvatar(
                 radius: 60,
                 backgroundColor: Colors.grey,
+                //!3.1.1 Hard-coded,  doit être une constante ou chargée dynamiquement (url,)
                 backgroundImage: NetworkImage(
                     "https://cdn2.thecatapi.com/images/M9p3Ql5GH.jpg"),
               ),
@@ -66,6 +68,7 @@ class CatDetailPage extends StatelessWidget {
                 'Origin : ${cat.origin}',
                 style: const TextStyle(fontSize: UI.textM),
               ),
+              //!3.1.1 Hard-coded, la chaine 'Egypt' devrait être une constante
               if (cat.origin == 'Egypt')
                 const Text('Ancient breed!',
                     style: TextStyle(color: Colors.amber)),

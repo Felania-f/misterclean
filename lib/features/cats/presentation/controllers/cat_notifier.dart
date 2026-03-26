@@ -10,6 +10,7 @@ import '../../domain/usecases/get_cats.dart';
 final catNotifierProvider =
     NotifierProvider<CatNotifier, CatListState>(CatNotifier.new);
 
+//!2.1.1 Bloaters
 // --- Cat List State ---
 class CatListState {
   final List<Cat> allCats;
@@ -35,6 +36,7 @@ class CatNotifier extends Notifier<CatListState> {
 
   String status = 'idle';
 
+//!Dead code, la méthode _getStatusMessage(),son retour n'est utilisé que partiellement. Le status 'success' ne correspond jamais (faute de frappe 'succes')
   String _getStatusMessage() {
     if (status == 'loading') {
       return 'Loading Cats';
@@ -63,6 +65,7 @@ class CatNotifier extends Notifier<CatListState> {
     );
 
     try {
+      //!1.2.3 Separation of Concerns, le notifier accède directement à catRemoteDataSourceProvider pour lire apiVersion, qui est pourtant une logique data leak dans la couche présentation
       final dataSource = ref.read(catRemoteDataSourceProvider);
       print('LOG [${DateTime.now()}]: fetching page $page (API ${dataSource.apiVersion})');
 
@@ -74,6 +77,7 @@ class CatNotifier extends Notifier<CatListState> {
         print('=== Report: ${cat.name} from ${cat.origin} ===');
       }
 
+//!Dead code, le status 'success' ('succes' en bas)
       status = 'success';
       state = CatListState(
         allCats: allCats,
@@ -93,6 +97,7 @@ class CatNotifier extends Notifier<CatListState> {
     }
   }
 
+//!1.2.12 CQS la méthode filterCats() retourne un int (nombre de résultats) ET mute l'état et pourtant une méthode ne doit pas a la fois agir et retourner une valeur
   Future<int> filterCats(String query) async {
     final filterCatsUseCase = ref.read(filterCatsUseCaseProvider);
     final filtered = await filterCatsUseCase(

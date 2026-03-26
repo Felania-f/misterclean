@@ -5,6 +5,8 @@ import 'cat_list_page.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+//!1.2.2 YAGNI,_toggleDarkMode, _syncWithCloud, _exportData affichent uniquement "coming soon", code non fonctionnel, inutile pour le moment
+//!Dead code, ces trois méthodes sont du dead code fonctionnel aussi, elles existent mais ne font rien d'utile
   @override
   Widget build(BuildContext context) {
     return Scaffold(
